@@ -97,16 +97,49 @@ export const API_BASE_URL = 'http://your-domain.com/api/';
 
 ```
 mobile-app/
-├── App.js              # Main app component
+├── App.js              # Main app component with navigation
 ├── app.json            # Expo configuration
 ├── assets/             # Images, fonts, etc.
-├── components/         # Reusable components (to be added)
-├── screens/            # App screens (to be added)
-├── navigation/         # Navigation setup (to be added)
-├── services/           # API services (to be added)
-├── utils/              # Utility functions (to be added)
+├── screens/            # App screens
+│   ├── HomeScreen.js         # Home screen with quick actions
+│   ├── MenuScreen.js         # Menu with categories and items
+│   ├── EventsScreen.js       # Events and packages
+│   ├── ReservationsScreen.js # Reservation booking form
+│   └── ContactScreen.js      # Contact form and info
 └── package.json        # Dependencies
 ```
+
+## Screens
+
+### 1. Home Screen
+- Welcome hero section
+- Features showcase
+- Quick action cards (Reservations, Events, Contact)
+- Restaurant information
+
+### 2. Menu Screen
+- Category filters (All, Appetizers, Mains, Desserts)
+- Menu items with prices and tags
+- Add to order functionality
+- Scrollable menu list
+
+### 3. Events Screen
+- Upcoming events list
+- Event packages (Silver, Gold, Platinum)
+- Event types (Weddings, Corporate, etc.)
+- Booking buttons
+
+### 4. Reservations Screen
+- Complete reservation form
+- Restaurant information
+- Business hours
+- Reservation policies
+
+### 5. Contact Screen
+- Contact form with validation
+- Quick contact options (Call, Email)
+- Restaurant information
+- FAQ section
 
 ## Development
 
