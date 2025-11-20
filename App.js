@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, View, StyleSheet, Text } from 'react-native';
 
 // Auth Screens
 import LoginScreen from './screens/LoginScreen';
 
-// Customer Screens (temporarily using existing HomeScreen and MenuScreen)
+// Customer Screens
 import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Customer Tab Navigator
+// Customer Tab Navigator (Blue Theme)
 function CustomerNavigator() {
   return (
     <Tab.Navigator
@@ -84,7 +82,7 @@ function CustomerNavigator() {
   );
 }
 
-// Driver Tab Navigator
+// Driver Tab Navigator (Green Theme)
 function DriverNavigator() {
   return (
     <Tab.Navigator
@@ -95,7 +93,7 @@ function DriverNavigator() {
           if (route.name === 'Dashboard') {
             iconName = focused ? 'speedometer' : 'speedometer-outline';
           } else if (route.name === 'Deliveries') {
-            iconName = focused ? 'bicycle' : 'bicycle-outline';
+            iconName = focused ? 'car' : 'car-outline';
           } else if (route.name === 'Earnings') {
             iconName = focused ? 'cash' : 'cash-outline';
           } else if (route.name === 'Profile') {
@@ -150,12 +148,12 @@ function PlaceholderScreen({ route }) {
   return (
     <View style={styles.placeholderContainer}>
       <Ionicons name="construct-outline" size={80} color="#ccc" />
-      <text style={styles.placeholderText}>
+      <Text style={styles.placeholderText}>
         {route.name} Screen
-      </text>
-      <text style={styles.placeholderSubtext}>
+      </Text>
+      <Text style={styles.placeholderSubtext}>
         Coming soon...
-      </text>
+      </Text>
     </View>
   );
 }
@@ -165,7 +163,6 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
-  // Check authentication on app launch
   useEffect(() => {
     checkAuth();
   }, []);
@@ -174,9 +171,8 @@ export default function App() {
     try {
       const token = await AsyncStorage.getItem('userToken');
       const role = await AsyncStorage.getItem('userRole');
-      const userData = await AsyncStorage.getItem('userData');
 
-      if (token && role && userData) {
+      if (token && role) {
         setUserRole(role);
         setIsAuthenticated(true);
       }
@@ -187,27 +183,16 @@ export default function App() {
     }
   }
 
-  async function handleLoginSuccess(role, user) {
+  const handleLoginSuccess = (role, user) => {
     setUserRole(role);
     setIsAuthenticated(true);
-  }
-
-  async function handleLogout() {
-    try {
-      await AsyncStorage.removeItem('userToken');
-      await AsyncStorage.removeItem('userRole');
-      await AsyncStorage.removeItem('userData');
-      setIsAuthenticated(false);
-      setUserRole(null);
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  }
+  };
 
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#1bb4f4" />
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -215,26 +200,9 @@ export default function App() {
   return (
     <NavigationContainer>
       {!isAuthenticated ? (
-        // Authentication Stack
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login">
-            {props => <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />}
-          </Stack.Screen>
-        </Stack.Navigator>
+        <LoginScreen onLoginSuccess={handleLoginSuccess} />
       ) : (
-        // Role-based Navigation
-        userRole === 'customer' ? (
-          <CustomerNavigator />
-        ) : userRole === 'driver' ? (
-          <DriverNavigator />
-        ) : (
-          // Fallback to login if role is unknown
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login">
-              {props => <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />}
-            </Stack.Screen>
-          </Stack.Navigator>
-        )
+        userRole === 'customer' ? <CustomerNavigator /> : <DriverNavigator />
       )}
     </NavigationContainer>
   );
@@ -245,23 +213,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f5f5f5',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#666',
   },
   placeholderContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
   },
   placeholderText: {
+    marginTop: 20,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginTop: 20,
   },
   placeholderSubtext: {
-    fontSize: 16,
-    color: '#999',
     marginTop: 10,
+    fontSize: 16,
+    color: '#666',
   },
 });

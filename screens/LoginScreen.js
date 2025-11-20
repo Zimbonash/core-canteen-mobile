@@ -137,7 +137,7 @@ export default function LoginScreen({ navigation, onLoginSuccess }) {
 
         <TouchableOpacity
           style={styles.registerLink}
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => Alert.alert('Register', 'Please contact your organization administrator or visit our website to create an account.')}
           disabled={loading}
         >
           <Text style={styles.registerText}>
