@@ -1,0 +1,23 @@
+--- This is a workaround for the setSheetLargestUndimmedDetent iOS crash
+--- The issue is that React Native tries to set a property that doesn't exist
+---
+--- To fix this, you need to:
+--- 1. Update to Expo SDK 52 or later (which uses React Native 0.76+)
+--- 2. OR add the following to your app.json:
+
+Add this to app.json under "expo.plugins":
+
+  "plugins": [
+    [
+      "expo-build-properties",
+      {
+        "ios": {
+          "deploymentTarget": "15.0"
+        }
+      }
+    ]
+  ]
+
+Then run: npm install expo-build-properties
+
+OR the quick fix: Rebuild the iOS app with the latest pods

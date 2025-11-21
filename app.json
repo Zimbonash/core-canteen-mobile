@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Core Canteen",
+    "slug": "core-canteen",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.corecanteen.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleDisplayName": "CoreCanteen",
+        "CFBundleName": "CoreCanteen",
+        "NSLocationWhenInUseUsageDescription": "CoreCanteen needs your location to show nearby restaurants and provide delivery tracking.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "CoreCanteen needs your location for real-time delivery tracking and route optimization."
+      }
+    },
+    "android": {
+      "package": "com.corecanteen.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7fcc335c-8f97-4e53-92ec-3a86dbcf50b9"
+      }
+    },
+    "owner": "zimbonash"
+  }
+}
